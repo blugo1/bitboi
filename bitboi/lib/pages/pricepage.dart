@@ -1,3 +1,4 @@
+import 'package:bitboi/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:bitboi/models/coindata.dart';
@@ -40,13 +41,13 @@ class _PricePageState extends State<PricePage> {
     for (int i = 0; i < currenciesList.length; i++) {
       var newText = Text(
         currenciesList[i],
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: offWhite),
       );
       textItems.add(newText);
     }
 
     return CupertinoPicker(
-        backgroundColor: Color(0xFF393e46),
+        backgroundColor: lightGrey,
         itemExtent: 32.0,
         onSelectedItemChanged: (selectedIndex) {
           print(selectedIndex);
@@ -91,7 +92,7 @@ class _PricePageState extends State<PricePage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
-                    color: Colors.white,
+                    color: offWhite,
                   ),
                 ),
               ),
@@ -101,7 +102,7 @@ class _PricePageState extends State<PricePage> {
             height: 120.0,
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
-            color: Color(0xFF222831),
+            color: darkGrey,
             child: Padding(
               padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
               child: getPicker(),
