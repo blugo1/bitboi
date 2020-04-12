@@ -28,4 +28,7 @@ const List<String> cryptoList = [
   'LTC',
 ];
 
+const coinAPI_URL = 'something.com';
+const api_KEY = 'myKEY';
+
 class CoinData {}
