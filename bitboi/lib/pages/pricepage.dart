@@ -10,7 +10,12 @@ class PricePage extends StatefulWidget {
 }
 
 class _PricePageState extends State<PricePage> {
+
+  //Initializers
   String selectedCurrency = 'USD';
+  Map<String, String> coinPrices = {};
+  bool isWaiting = false;
+
 
   //Dropdown method for android style selector
   DropdownButton<String> androidDropdown() {
@@ -29,7 +34,7 @@ class _PricePageState extends State<PricePage> {
         items: dropdownItems,
         onChanged: (value) {
           setState(() {
-            selectedCurrency = value;
+            selectedCurrency = value; //COIN DATA GOES HERE IF ANDROID
           });
         });
   }
@@ -50,7 +55,7 @@ class _PricePageState extends State<PricePage> {
         backgroundColor: lightGrey,
         itemExtent: 32.0,
         onSelectedItemChanged: (selectedIndex) {
-          print(selectedIndex);
+          print(selectedIndex); //COIN DATA GOES HERE IF IOS
         },
         children: textItems);
   }
@@ -65,6 +70,30 @@ class _PricePageState extends State<PricePage> {
       return null;
     }
   }
+
+  void getData() async {
+    isWaiting = true;
+    try {
+      var data = await CoinData().getCoinData(selectedCurrency);
+      isWaiting = false;
+      setState(() {
+        coinPrices = data;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //You need this to do this at the beginning
+  @override
+  void initState(){
+    super.initState();
+    getData();
+  }
+
+  //TODO: MAKE THE CARDS FOR THE UI
+
+
 
   @override
   Widget build(BuildContext context) {
