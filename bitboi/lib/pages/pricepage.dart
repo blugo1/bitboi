@@ -2,6 +2,7 @@ import 'package:bitboi/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:bitboi/models/coindata.dart';
+import 'package:bitboi/models/coincard.dart';
 import 'dart:io' show Platform;
 
 class PricePage extends StatefulWidget {
@@ -60,6 +61,20 @@ class _PricePageState extends State<PricePage> {
         children: textItems);
   }
 
+  Column cardBuilder(){
+    List<CoinCard> coinCards = [];
+    for(String coinName in coinList){
+      coinCards.add(
+        CoinCard(
+          currencyType: coinName,
+          currencySelected: selectedCurrency,
+          value: isWaiting ? '?' : coinPrices[coinName], //Display price and ? while loading
+        ),
+      );
+    }
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: coinCards,);
+  }
+
   //Check the platform and return the correct selector UI
   getPicker() {
     if (Platform.isIOS) {
@@ -91,10 +106,6 @@ class _PricePageState extends State<PricePage> {
     getData();
   }
 
-  //TODO: MAKE THE CARDS FOR THE UI
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,28 +116,7 @@ class _PricePageState extends State<PricePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-            child: Card(
-              color: Color(0xFF00adb5),
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: 30.0, horizontal: 28.0), //Card size
-                child: Text(
-                  '1 BTC = ? USD', //Placeholder
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: offWhite,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          cardBuilder(),
           Container(
             height: 120.0,
             alignment: Alignment.center,
